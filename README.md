@@ -1,4 +1,4 @@
-# AutoSpeechDataset
+## AutoSpeechDataset
 
 This tool will solve a major problem for generating speech datasets using youtube videos. Just input your link of video and get a tts/asr ready data in suitable format. Perfect for training speech models.
 
@@ -59,4 +59,10 @@ flowchart TD
 
     %% Connect Row 3 down to Final Output
     H --> I
+```
+
+## Packages required
+
+```
+sudo apt install ffmpeg
 ```
