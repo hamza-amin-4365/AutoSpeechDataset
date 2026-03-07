@@ -1,3 +1,9 @@
 yt-dlp
 ffmpeg-python
 openai
+langgraph
+langchain
+langchain-openai
+langchain-community
+faiss-cpu
+python-dotenv
