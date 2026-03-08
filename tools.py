@@ -6,6 +6,7 @@ from typing import Dict, Any
 
 from yt_dlp import YoutubeDL
 from dotenv import load_dotenv
+from langchain_core.tools import tool
 
 load_dotenv()
 
@@ -25,7 +26,9 @@ def get_video_id(url: str) -> str:
     match = re.search(pattern, url)
     return match.group(1) if match else "unknown"
 
+@tool
 def download_audio(youtube_url: str) -> Dict[str, Any]:
+    """Downloads audio from a YouTube URL and returns the local file path."""
     video_id = get_video_id(youtube_url)
     audio_path = AUDIO_DIR / f"{video_id}.wav"
 
@@ -50,9 +53,12 @@ def download_audio(youtube_url: str) -> Dict[str, Any]:
         audio_path = AUDIO_DIR / f"{video_id}.wav"
     return {"status": "success", "video_id": video_id, "audio_path": str(audio_path)}
 
+@tool
 def transcribe_audio(audio_path: str) -> Dict[str, Any]:
+    """Transcribes the provided audio file and returns the transcript text."""
     path = Path(audio_path)
     out_file = TRANSCRIPT_DIR / f"{path.stem}.json"
+    print(f"DEBUG: Transcription tool received path: {path}")
 
     if out_file.exists():
         print(f"   (Using cached transcript: {out_file})")
@@ -105,7 +111,9 @@ def transcribe_audio(audio_path: str) -> Dict[str, Any]:
         print(f"Error during transcription: {e}")
         raise
 
+@tool
 def build_dataset(transcript_path: str, audio_path: str) -> Dict[str, Any]:
+    """Transcribes the provided audio file and returns the transcript text."""
     with open(transcript_path, 'r') as f:
         segments = json.load(f)
     dataset_file = DATASET_DIR / f"{Path(audio_path).stem}_dataset.json"
@@ -122,3 +130,11 @@ def build_dataset(transcript_path: str, audio_path: str) -> Dict[str, Any]:
     with open(dataset_file, 'w') as f:
         json.dump(dataset, f, indent=2)
     return {"status": "success", "dataset_path": str(dataset_file), "count": len(dataset)}
+
+@tool
+def fetch_youtube_metadata(url: str) -> dict:
+    """Fetches metadata from youtube of the current video being processed"""
+    ydl_opts = {"quiet": True, "skip_download": True}
+    with YoutubeDL(ydl_opts) as ydl:
+        info = ydl.extract_info(url, download=False)
+    return {"title": info.get("title"), "uploader": info.get("uploader")}
