@@ -17,3 +17,4 @@ docs/
 .python-version
 test.py
 approval_logic.py
+mcp/

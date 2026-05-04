@@ -30,6 +30,14 @@ def inspect_state(thread_id: str):
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        print("Usage: python persistence_test.py pipeline_7346")
+        print("Usage: python persistence_test.py {id}")
         sys.exit(1)
     inspect_state(sys.argv[1])
+
+
+## list of ids
+
+ids= [
+    "pipeline_7346",
+    "pipeline_5229"
+]

@@ -1,0 +1,39 @@
+version: "3.9"
+
+services:
+  agent:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - DEEPGRAM_API_KEY=${DEEPGRAM_API_KEY}
+      - CHROMA_HOST=vectordb
+      - CHROMA_PORT=8001
+    depends_on:
+      - vectordb
+    networks:
+      - app-network
+    volumes:
+      - audio-data:/app/src/audio
+      - transcript-data:/app/src/transcripts
+      - dataset-data:/app/src/dataset
+
+  vectordb:
+    image: chromadb/chroma:latest
+    ports:
+      - "8001:8000"
+    networks:
+      - app-network
+    volumes:
+      - chroma-data:/chroma/chroma
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  chroma-data:
+  audio-data:
+  transcript-data:
+  dataset-data:
