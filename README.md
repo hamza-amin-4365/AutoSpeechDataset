@@ -7,6 +7,25 @@ This tool will solve a major problem for generating speech datasets using youtub
 
 This tool is stricktly for education purpose only as YouTube cannot be redistributed freely in most cases.  
 
+## Packages required
+
+```
+sudo apt install ffmpeg
+```
+
+## How to run
+
+Make sure to have all the dependecies. If you have uv, just hit
+``` 
+uv sync
+```
+Else make sure to download uv super easy to install, best dependency manager in my opinion.
+
+Also don't forget to add GROK and DEEPGRAM api keys.
+
+```
+uv run src/api.py
+```
 
 ## High Level Architecture
 ```mermaid
@@ -59,10 +78,4 @@ flowchart TD
 
     %% Connect Row 3 down to Final Output
     H --> I
-```
-
-## Packages required
-
-```
-sudo apt install ffmpeg
 ```

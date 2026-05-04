@@ -1,0 +1,82 @@
+[
+  {
+    "query": "What does the AutoSpeechDataset pipeline do?",
+    "reference": "AutoSpeechDataset is an agentic pipeline that downloads audio from YouTube videos, transcribes them using Deepgram Nova-3, and builds structured speech datasets suitable for ASR and TTS model training."
+  },
+  {
+    "query": "Which tool is used to download audio from YouTube?",
+    "reference": "The download_audio tool uses yt-dlp to extract audio from YouTube URLs and saves it as a 16kHz mono WAV file."
+  },
+  {
+    "query": "What transcription service does the pipeline use?",
+    "reference": "The pipeline uses Deepgram Nova-3 for transcription, with explicit Urdu language support set via language='ur'."
+  },
+  {
+    "query": "What is the duration filter applied to audio segments?",
+    "reference": "Segments are filtered to keep only those between 1 and 12 seconds in duration, which is optimal for ASR and TTS training."
+  },
+  {
+    "query": "What format is the final dataset saved in?",
+    "reference": "The final dataset is saved as a JSON file containing entries with id, audio_path, start time, end time, text transcript, and duration."
+  },
+  {
+    "query": "What LLM powers the agents in this pipeline?",
+    "reference": "The agents are powered by Groq's Llama 3.3 70B Versatile model with temperature set to 0 for deterministic outputs."
+  },
+  {
+    "query": "What is the role of the Executor Agent?",
+    "reference": "The Executor Agent is an Audio Processing Specialist responsible for downloading audio from YouTube and transcribing it using the available tools."
+  },
+  {
+    "query": "What is the role of the Analyst Agent?",
+    "reference": "The Analyst Agent is a Dataset Builder responsible for transforming transcripts into structured datasets using the build_dataset tool."
+  },
+  {
+    "query": "How does the pipeline handle previously downloaded audio?",
+    "reference": "The pipeline uses a caching mechanism that checks if the audio file already exists before downloading, avoiding redundant downloads."
+  },
+  {
+    "query": "What orchestration framework is used to manage the agents?",
+    "reference": "LangGraph is used to orchestrate the multi-agent pipeline as a directed graph with nodes for executor, RAG advisor, analyst, and approval."
+  },
+  {
+    "query": "What is the purpose of the RAG node in the pipeline?",
+    "reference": "The RAG node retrieves quality guidelines from the PRD document using FAISS vector search and injects them as context for downstream agents."
+  },
+  {
+    "query": "How is state persisted between pipeline runs?",
+    "reference": "State is persisted using LangGraph's SqliteSaver checkpointer backed by a SQLite database file, allowing pipeline resumption via thread IDs."
+  },
+  {
+    "query": "What is the human-in-the-loop step in the pipeline?",
+    "reference": "The approval node presents the dataset path to the user and requires explicit y/n input before finalizing dataset creation."
+  },
+  {
+    "query": "What audio format does the pipeline produce?",
+    "reference": "The pipeline produces 16kHz mono WAV files using FFmpeg post-processing via yt-dlp."
+  },
+  {
+    "query": "What embedding model is used for RAG?",
+    "reference": "The RAG system uses HuggingFace's all-MiniLM-L6-v2 model for generating document embeddings stored in a FAISS vector store."
+  },
+  {
+    "query": "What language is the pipeline primarily designed for?",
+    "reference": "The pipeline is primarily designed for Urdu, a low-resource language, with Deepgram Nova-3 configured with language='ur' for accurate transcription."
+  },
+  {
+    "query": "How is the thread ID generated for each pipeline run?",
+    "reference": "The thread ID is generated deterministically from the YouTube URL hash using the formula: pipeline_{abs(hash(youtube_url)) % 10000}."
+  },
+  {
+    "query": "What happens if the transcript path is empty after the executor node?",
+    "reference": "The router function checks if transcript_path is set. If empty, the pipeline routes to __end__ and terminates without running the analyst or approval nodes."
+  },
+  {
+    "query": "What fields are included in each dataset entry?",
+    "reference": "Each dataset entry includes: id (unique segment identifier), audio_path (file location), start (segment start time), end (segment end time), text (transcript), and duration."
+  },
+  {
+    "query": "What is the purpose of the fetch_youtube_metadata tool?",
+    "reference": "The fetch_youtube_metadata tool retrieves video metadata such as title and uploader from YouTube without downloading the video, using yt-dlp in skip_download mode."
+  }
+]
