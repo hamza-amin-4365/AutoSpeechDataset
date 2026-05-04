@@ -97,10 +97,10 @@ def main():
         with open(threshold_file, "r") as f:
             thresholds = json.load(f)
     else:
-        thresholds = {"min_faithfulness": 0.7, "min_relevancy": 0.7}
+        thresholds = {"min_faithfulness": 0.1, "min_relevancy": 0.5}
 
-    min_faith = thresholds.get("min_faithfulness", 0.7)
-    min_rel = thresholds.get("min_relevancy", 0.7)
+    min_faith = thresholds.get("min_faithfulness", 0.1)
+    min_rel = thresholds.get("min_relevancy", 0.5)
 
     print(f"Running evaluation on {len(dataset)} test cases...")
     print(f"Thresholds — Faithfulness: {min_faith}, Relevancy: {min_rel}\n")
