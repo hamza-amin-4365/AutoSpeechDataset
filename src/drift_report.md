@@ -1,14 +1,19 @@
 # Drift Report
 
-Total interactions logged: 13
-Negative feedback: 5 (38.5%)
+Total interactions logged: 15
+Negative feedback: 6 (40.0%)
 
 ## Failure Categories
 
-- **Pipeline Failure**: 4 cases (80.0% of failures)
-- **Tool Error**: 1 cases (20.0% of failures)
+- **Pipeline Failure**: 4 cases (66.7% of failures)
+- **Incomplete Response**: 1 cases (16.7% of failures)
+- **Tool Error**: 1 cases (16.7% of failures)
 
 ## Detailed Failures
+
+### [Incomplete Response] 2026-05-13T11:58:24.077486
+- Input: https://youtube.com/shorts/l_nf9Lco1NM?si=33y8Mr1D1ZoLowdR
+- Reason: The agent provided only metadata about the video, such as the video ID, transcript, and dataset, without addressing the user's potential question or need related to the YouTube video.
 
 ### [Tool Error] 2026-05-01T14:48:35.114269
 - Input: https://youtube.com/shorts/hij456
@@ -22,7 +27,7 @@ Negative feedback: 5 (38.5%)
 
 ### [Pipeline Failure] 2026-05-01T14:48:35.102310
 - Input: https://youtube.com/shorts/stu901
-- Reason: The agent reported that the video was processed but no dataset file was created, indicating a technical error during processing.
+- Reason: The agent reported that the video was processed but a dataset file was not created, indicating a technical error during processing.
 - User comment: Dataset file missing after run
 
 ### [Pipeline Failure] 2026-05-01T14:48:35.093053
