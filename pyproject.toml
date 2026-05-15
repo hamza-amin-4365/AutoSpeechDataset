@@ -1,29 +1,20 @@
 [project]
-name = "capstone-lab"
-version = "0.1.0"
-description = "Add your description here"
+name = "speech-dataset-pipeline"
+version = "2.0.0"
+description = "Production-grade YouTube to Speech Dataset automation service"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "aiofiles>=24.1.0",
     "deepgram-sdk>=6.0.1",
-    "faiss-cpu>=1.13.2",
     "fastapi>=0.136.1",
     "ffmpeg-python>=0.2.0",
-    "langchain>=1.2.10",
-    "langchain-community>=0.4.1",
-    "langchain-groq>=1.1.2",
-    "langchain-huggingface>=1.2.1",
-    "langchain-openai>=1.1.10",
-    "langchain-text-splitters>=1.1.1",
-    "langgraph>=1.0.9",
-    "langgraph-checkpoint-sqlite>=3.0.3",
-    "mcp>=1.26.0",
-    "openai>=2.21.0",
     "pydantic>=2.12.5",
-    "pypdf>=6.11.0",
+    "pydantic-settings>=2.0.0",
     "python-dotenv>=1.2.1",
-    "schema>=0.7.8",
-    "sentence-transformers>=5.2.3",
-    "streamlit>=1.57.0",
+    "uvicorn[standard]>=0.30.0",
     "yt-dlp>=2026.2.21",
 ]
+
+[project.scripts]
+pipeline = "src.main_cli:main"
